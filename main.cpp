@@ -36,7 +36,6 @@ public:
         while (currentNode->next != NULL) {
             currentNode = currentNode->next;
         }
-        
         NewNode->prev = currentNode;
         currentNode->next = NewNode;
         return currentNode->next->data;
@@ -53,17 +52,17 @@ public:
         Node* NewNode = new Node();
         NewNode->data = val;
         
-        int currentNodeNum = 0;
+        int count = 0;
         Node* currentNode = head;
-        while (currentNodeNum != index-1) {
-            currentNodeNum++;
+        while (count != index-1) {
+            count++;
             currentNode = currentNode->next;
         }
-        
+       
         NewNode->next = currentNode->next;
-        currentNode->next->next->prev = NewNode;
-        currentNode->next = NewNode;
         NewNode->prev = currentNode;
+        currentNode->next->prev = NewNode;
+        currentNode->next = NewNode;
         
         return NewNode->data;
     }
@@ -81,6 +80,7 @@ public:
     int removeBottom(){
         if(size()==0){
             cout << "Notthing to remove" << endl;
+            return -1;
         }
         Node* currentNode = head;
         while (currentNode->next != NULL) {
@@ -91,7 +91,13 @@ public:
         return removedVal;
     }
     
-    void removeAt(int index){
+    
+    int removeAt(int index){
+        if(index==0){
+            return removeTop();
+        }else if(index==size()){
+            return removeBottom();
+        }
         int count = 0;
         Node* currentNode = head;
         Node* prevNode = currentNode->prev;
@@ -102,10 +108,11 @@ public:
             NextNode = currentNode->next;
             count++;
         }
-        currentNode->next = currentNode->next->next;
-        currentNode->next->next->prev = currentNode;
-//        NextNode->prev = currentNode;
-//        cout << "node to be removed : " << currentNode->data <<endl;
+        
+        int currentVal = currentNode->next->data;
+        currentNode->next = NextNode->next;
+        NextNode->next->prev = currentNode;
+        return currentVal;
     }
     
     int valAtHead(){
@@ -151,7 +158,7 @@ public:
             cout << currentNode->data << endl;
             currentNode = currentNode->next;
         }
-        cout << currentNode->data << endl;
+        cout << currentNode->data << " prev :" << currentNode->prev->data << endl;
         cout << "Print ends" << endl;
         return;
     }
@@ -178,12 +185,15 @@ int main(int argc, const char * argv[]) {
     DoubleLinkList1->addTop(33);
     DoubleLinkList1->addTop(44);
     DoubleLinkList1->addBottom(55);
+    DoubleLinkList1->addBottom(56);
     DoubleLinkList1->removeTop();
     DoubleLinkList1->addAt(99, 2);
     DoubleLinkList1->removeAt(2);
-    cout << "val at 4 : " << DoubleLinkList1->valAt(3) <<endl;
+//    cout << "val at 4 : " << DoubleLinkList1->valAt(3) <<endl;
     cout << "Size : " << DoubleLinkList1->size() <<endl;
     DoubleLinkList1->printAll();
+    
+    cout << "value to be printed :11 : " << DoubleLinkList1->head->next->next->next->prev->data <<endl;
     
     
 }
