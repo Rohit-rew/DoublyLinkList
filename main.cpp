@@ -42,6 +42,32 @@ public:
         return currentNode->next->data;
     }
     
+    int addAt(int val , int index){
+        
+        if(index==0){
+            return addTop(val);
+        }else if(index == size()){
+            return  addBottom(val);
+        }
+        
+        Node* NewNode = new Node();
+        NewNode->data = val;
+        
+        int currentNodeNum = 0;
+        Node* currentNode = head;
+        while (currentNodeNum != index-1) {
+            currentNodeNum++;
+            currentNode = currentNode->next;
+        }
+        
+        NewNode->next = currentNode->next;
+        currentNode->next->next->prev = NewNode;
+        currentNode->next = NewNode;
+        NewNode->prev = currentNode;
+        
+        return NewNode->data;
+    }
+    
     int removeTop(){
         if(head==NULL){
             return -1;
@@ -63,6 +89,18 @@ public:
         int removedVal = currentNode->data;
         
         return removedVal;
+    }
+    
+    int valAtHead(){
+        return head->data;
+    }
+    
+    int valAtBottom(){
+        Node* currentNode = head;
+        while (currentNode->next != NULL) {
+            currentNode = currentNode->next;
+        }
+        return currentNode->data;
     }
     
     
@@ -105,6 +143,7 @@ int main(int argc, const char * argv[]) {
     DoubleLinkList1->addTop(44);
     DoubleLinkList1->addBottom(55);
     DoubleLinkList1->removeTop();
+    DoubleLinkList1->addAt(99, 2);
     
     cout << "Size : " << DoubleLinkList1->size() <<endl;
     DoubleLinkList1->printAll();
