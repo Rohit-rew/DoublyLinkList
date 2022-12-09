@@ -91,6 +91,23 @@ public:
         return removedVal;
     }
     
+    void removeAt(int index){
+        int count = 0;
+        Node* currentNode = head;
+        Node* prevNode = currentNode->prev;
+        Node* NextNode = currentNode->next;
+        while (count != index-1) {
+            prevNode = currentNode;
+            currentNode = currentNode->next;
+            NextNode = currentNode->next;
+            count++;
+        }
+        currentNode->next = currentNode->next->next;
+        currentNode->next->next->prev = currentNode;
+//        NextNode->prev = currentNode;
+//        cout << "node to be removed : " << currentNode->data <<endl;
+    }
+    
     int valAtHead(){
         return head->data;
     }
@@ -100,6 +117,25 @@ public:
         while (currentNode->next != NULL) {
             currentNode = currentNode->next;
         }
+        return currentNode->data;
+    }
+    
+    //=>Returns value of a node at a particular index
+    //=>if index is negative returns -1
+    //=>if index is greater than the size then returns -1
+    int valAt(int index){
+        if(index<0){
+            return -1;
+        }else if(index>size()-1){
+            return -1;
+        }
+        Node* currentNode = head;
+        int count = 0;
+        while (count != index) {
+            currentNode = currentNode->next;
+            count++;
+        }
+        
         return currentNode->data;
     }
     
@@ -144,7 +180,8 @@ int main(int argc, const char * argv[]) {
     DoubleLinkList1->addBottom(55);
     DoubleLinkList1->removeTop();
     DoubleLinkList1->addAt(99, 2);
-    
+    DoubleLinkList1->removeAt(2);
+    cout << "val at 4 : " << DoubleLinkList1->valAt(3) <<endl;
     cout << "Size : " << DoubleLinkList1->size() <<endl;
     DoubleLinkList1->printAll();
     
