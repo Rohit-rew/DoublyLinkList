@@ -13,13 +13,13 @@ public:
     Node* head;
     
     int addTop(int val){
-        Node* NewNode = new Node;
+        Node* NewNode = new Node();
         NewNode->data = val;
         if(head==NULL){
             head = NewNode;
         }else{
-            head->next->prev = NewNode;
-            NewNode->next = head->next;
+            head->prev = NewNode;
+            NewNode->next = head;
             head = NewNode;
         }
         return 0;
@@ -30,9 +30,10 @@ public:
         Node* currentNode = head;
         
         while(currentNode->next != NULL){
-            cout << currentNode->data <<endl;
+            cout << currentNode->data << endl;
             currentNode = currentNode->next;
         }
+        cout << currentNode->data <<endl;
         cout << "Print ends" <<endl;
         return;
     }
@@ -42,9 +43,9 @@ public:
 int main(int argc, const char * argv[]) {
     DoubleLinkList* DoubleLinkList1 = new DoubleLinkList;
     DoubleLinkList1->addTop(11);
-//    DoubleLinkList1->addTop(22);
-//    DoubleLinkList1->addTop(33);
-//    DoubleLinkList1->addTop(44);
+    DoubleLinkList1->addTop(22);
+    DoubleLinkList1->addTop(33);
+    DoubleLinkList1->addTop(44);
     
     DoubleLinkList1->printAll();
 }
