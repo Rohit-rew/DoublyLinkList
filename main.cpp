@@ -42,18 +42,57 @@ public:
         return currentNode->next->data;
     }
     
+    int removeTop(){
+        if(head==NULL){
+            return -1;
+        }
+        int removedVal = head->data;
+        head->next->prev = NULL;
+        head = head->next;
+        return removedVal;
+    }
+    
+    int removeBottom(){
+        if(size()==0){
+            cout << "Notthing to remove" << endl;
+        }
+        Node* currentNode = head;
+        while (currentNode->next != NULL) {
+            currentNode = currentNode->next;
+        }
+        int removedVal = currentNode->data;
+        
+        return removedVal;
+    }
+    
     
     void printAll(){
-        cout << "Print starts" <<endl;
+        if(size()==0){
+            cout << "Nothing to print" << endl;
+            return;
+        }
+        cout << "Print starts" << endl;
         Node* currentNode = head;
-        
         while(currentNode->next != NULL){
             cout << currentNode->data << endl;
             currentNode = currentNode->next;
         }
-        cout << currentNode->data <<endl;
-        cout << "Print ends" <<endl;
+        cout << currentNode->data << endl;
+        cout << "Print ends" << endl;
         return;
+    }
+    
+    int size(){
+        if(head == NULL){
+            return 0;
+        }
+        Node* currentNode = head;
+        int size = 0;
+        while (currentNode->next != NULL) {
+            currentNode = currentNode->next;
+            size++;
+        }
+        return size+1;
     }
     
 };
@@ -65,6 +104,10 @@ int main(int argc, const char * argv[]) {
     DoubleLinkList1->addTop(33);
     DoubleLinkList1->addTop(44);
     DoubleLinkList1->addBottom(55);
+    DoubleLinkList1->removeTop();
     
+    cout << "Size : " << DoubleLinkList1->size() <<endl;
     DoubleLinkList1->printAll();
+    
+    
 }
